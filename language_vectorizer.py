@@ -16,14 +16,14 @@ from nltk.tokenize import word_tokenize
 #--------------------------------------------------------------------
 # PARAMETERS TO CLEAN UP THE TEXT
 #--------------------------------------------------------------------
-STOPLIST = set(stopwords.words('english') + ["n't", "'s", "'m", "ca"] + list(ENGLISH_STOP_WORDS))
+STOPLIST    = set(stopwords.words('english') + ["n't", "'s", "'m", "ca"] + list(ENGLISH_STOP_WORDS))
 re.DEFAULT_VERSION = re.VERSION1
 split_chars = lambda char: list(char.strip().split(' '))
-WHITESPACE = ["", " ", "  ", "   ","    ", "\t", "\n", "\r\n", "\n\n"]
-_quotes = r'\' \'\' " ” “ `` ` ‘ ´ ‘‘ ’’ ‚ , „ » « 「 」 『 』 （ ） 〔 〕 【 】 《 》 〈 〉'
-QUOTES  = split_chars(_quotes)
-_hyphens = '- – — -- --- —— ~'
-HYPHENS  = split_chars(_hyphens)
+WHITESPACE  = ["", " ", "  ", "   ","    ", "\t", "\n", "\r\n", "\n\n"]
+_quotes     = r'\' \'\' " ” “ `` ` ‘ ´ ‘‘ ’’ ‚ , „ » « 「 」 『 』 （ ） 〔 〕 【 】 《 》 〈 〉'
+QUOTES      = split_chars(_quotes)
+_hyphens    = '- – — -- --- —— ~'
+HYPHENS     = split_chars(_hyphens)
 
 #---------------------------------------------------------------
 # A TOOL THAT VECTORIZES TEXT DOCUMENTS AND CLAUSES
