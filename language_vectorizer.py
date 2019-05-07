@@ -106,7 +106,7 @@ class langvec:
         # OPTIONALLY, SAVE TENSORS FOR VISUALIZATION
         if save_tensors_as is not None:
             with open( save_tensors_as + '_tensors.tsv', 'w+') as tensors:
-                    with open( save_tensors_as + 'metadata.tsv', 'w+') as metadata:
+                    with open( save_tensors_as + '_metadata.tsv', 'w+') as metadata:
                              for word in model.wv.index2word:
                                  encoded=word
                                  metadata.write(encoded + '\n')
