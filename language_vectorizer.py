@@ -76,7 +76,8 @@ class langvec:
         pattern = re.compile(r'\b(' + r'|'.join(HYPHENS) + r')\b\s*')
         clean_text = pattern.sub('', clean_text)
 
-        self.clean_text = clean_text
+        self.text = clean_text
+
 
         #SPLIT THE DATA INTO SENTENCES
         raw_text_sentences = clean_text.split('.')
