@@ -36,13 +36,13 @@ class langvec:
         
         # WORD2VEC RELATED
         self.word2vec_model  = None;
-        self.word2vec_params = {'words_min_count'      : 10,   # min_count = ignore all words with total frequency lower than this.
-                                'features_size'        : 100,  # number of features
-                                'words_distance_window': 4,    # window is the maximum distance between the current and predicted word within a sentence.
-                                'sorted_vocab'         : 1,    # if 1 (default), sort the vocabulary by descending frequency before assigning word indexes.
-                                'train_algorithm'      : 1,    # defines the training algorithm. By default (sg=0), CBOW is used. Otherwise (sg=1), skip-gram is employed.
-                                'negative_sampling'    : 10,   # if > 0, negative sampling will be used, the int for negative specifies how many “noise words” should be drawn (usually between 5-20). # Default is 5. If set to 0, no negative samping is used.
-                                'max_vocab_size'       : None  # limit RAM during vocabulary building; if there are more unique words than this, then prune the infrequent ones. # Every 10 million word types need about 1GB of RAM. Set to None for no limit (default).
+        self.word2vec_params = { 'words_min_count'      : 10,   # min_count = ignore all words with total frequency lower than this.
+                                 'features_size'        : 100,  # number of features
+                                 'words_distance_window': 4,    # window is the maximum distance between the current and predicted word within a sentence.
+                                 'sorted_vocab'         : 1,    # if 1 (default), sort the vocabulary by descending frequency before assigning word indexes.
+                                 'train_algorithm'      : 1,    # defines the training algorithm. By default (sg=0), CBOW is used. Otherwise (sg=1), skip-gram is employed.
+                                 'negative_sampling'    : 10,   # if > 0, negative sampling will be used, the int for negative specifies how many “noise words” should be drawn (usually between 5-20). # Default is 5. If set to 0, no negative samping is used.
+                                 'max_vocab_size'       : None  # limit RAM during vocabulary building; if there are more unique words than this, then prune the infrequent ones. # Every 10 million word types need about 1GB of RAM. Set to None for no limit (default).
                                }
 
          
@@ -87,7 +87,7 @@ class langvec:
 	#---------------------------------------------------------------
 	# TRAIN THE MODEL
 	#---------------------------------------------------------------
-    def trian_word2vec_model(self, save_model_as, save_tensors_as = None ):
+    def trian_word2vec_model(self, save_model_as, save_tensors = True ):
         model = word2vec.Word2Vec(self.sentences, 
                                   sg             = self.word2vec_params['train_algorithm'], 
                                   min_count      = self.word2vec_params['words_min_count'], 
@@ -95,8 +95,7 @@ class langvec:
                                   window         = self.word2vec_params['words_distance_window'], 
                                   sorted_vocab   = self.word2vec_params['sorted_vocab'],
                                   negative       = self.word2vec_params['negative_sampling'],
-                                  max_vocab_size = self.word2vec_params['max_vocab_size']
-                                  )
+                                  max_vocab_size = self.word2vec_params['max_vocab_size'])
 
         self.word2vec_mdoel = model
         
@@ -104,14 +103,14 @@ class langvec:
         model.save(save_model_as + '.w2vmodel')
 
         # OPTIONALLY, SAVE TENSORS FOR VISUALIZATION
-        if save_tensors_as is not None:
-            with open( save_tensors_as + '_tensors.tsv', 'w+') as tensors:
-                    with open( save_tensors_as + '_metadata.tsv', 'w+') as metadata:
-                             for word in model.wv.index2word:
-                                 encoded=word
-                                 metadata.write(encoded + '\n')
-                                 vector_row = '\t'.join(map(str, model[word]))
-                                 tensors.write(vector_row + '\n')
+        if save_tensors is True:
+            with open( save_model_as + '_tensors.tsv', 'w+') as tensors:
+                with open( save_model_as + '_metadata.tsv', 'w+') as metadata:
+                    for word in model.wv.index2word:
+                        encoded = word
+                        metadata.write(encoded + '\n')
+                        vector_row = '\t'.join(map(str, model[word]))
+                        tensors.write(vector_row + '\n')
 
 
 if __name__ == "__main__":
@@ -128,7 +127,7 @@ if __name__ == "__main__":
     lv.preprocess_text()
 
     # TRAIN WORD TO VEC
-    lv.trian_word2vec_model(save_model_as = 'bible', save_tensors_as = 'bible' )
+    lv.trian_word2vec_model(save_model_as = 'bible', save_tensors = True )
 
 
 
