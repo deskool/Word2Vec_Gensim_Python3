@@ -40,7 +40,14 @@ lv.word2vec_params['features_size'] = 10
 lv.trian_word2vec_model(save_model_as = 'bible', save_tensors_as = 'bible' )
 ```
 
+## Pretrained doc2vec model at the sentence level available here
 
+Based on the work of Jey Han Lau and Timothy Baldwin (2016). An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding Generation. In Proceedings of the 1st Workshop on Representation Learning for NLP, 2016.
+https://github.com/jhlau/doc2vec
+
+```
+wget https://ibm.box.com/s/3f160t4xpuya9an935k84ig465gvymm2
+```
 
 
 ### OUTPUTS: 
